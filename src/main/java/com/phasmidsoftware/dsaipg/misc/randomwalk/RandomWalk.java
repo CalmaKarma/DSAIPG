@@ -20,9 +20,7 @@ public class RandomWalk {
      * @return the (Euclidean) distance from the origin to the current position.
      */
     public double distance() {
-        // TO BE IMPLEMENTED 
-         return 0.0;
-        // END SOLUTION
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
 
     /**
@@ -32,9 +30,8 @@ public class RandomWalk {
      * @param dy the distance he moves in the y direction
      */
     private void move(int dx, int dy) {
-        // TO BE IMPLEMENTED  do move
-         throw new RuntimeException("Not implemented");
-        // END SOLUTION
+        x += dx;
+        y += dy;
     }
 
     /**
@@ -43,8 +40,9 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // TO BE IMPLEMENTED 
-throw new RuntimeException("implementation missing");
+        for (int i = 0; i < m; i++) {
+            randomMove();
+        }
     }
 
     /**
@@ -93,7 +91,7 @@ throw new RuntimeException("implementation missing");
         if (args.length == 0)
             throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
         int m = Integer.parseInt(args[0]);
-        int n = 30;
+        int n = 10000;
         if (args.length > 1) n = Integer.parseInt(args[1]);
         double meanDistance = randomWalkMulti(m, n);
         System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
