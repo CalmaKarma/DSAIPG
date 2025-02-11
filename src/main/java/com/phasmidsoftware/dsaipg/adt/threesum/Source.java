@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * and designed for use in scenarios like
  * testing algorithms or data structures that require randomly generated inputs.
  */
-class Source {
+public class Source {
     /**
      * Primary constructor of a Source instance with the specified values for N, M, and a Random instance.
      *
