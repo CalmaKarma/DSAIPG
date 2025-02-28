@@ -121,7 +121,11 @@ public class PriorityQueue<K> implements Iterable<K> {
             last--; // if we are already at capacity, then we arbitrarily trash the least eligible element
         // (even if it's more eligible than key).
         binHeap[++last + first - 1] = key; // insert the key into the binary heap just after the last element
+        // do not count swap and compare for the insertion
+        int tmp_cnt_compares = cnt_compares, tmp_cnt_swaps = cnt_swaps;
         swimUp(last + first - 1); // reorder the binary heap
+        cnt_compares = tmp_cnt_compares;
+        cnt_swaps = tmp_cnt_swaps; // restore the counts
     }
 
     /**
@@ -167,7 +171,7 @@ public class PriorityQueue<K> implements Iterable<K> {
      * @param k the starting index of the element in the heap to be adjusted.
      */
     void snake(@SuppressWarnings("SameParameterValue") int k) {
-        swimUp(doHeapify(k, (a, b) -> !unordered(a, b)));
+        swimUp(doHeapify(k, (a, b) -> false));
     }
 
     /**
@@ -191,6 +195,7 @@ public class PriorityQueue<K> implements Iterable<K> {
      * @return true if the values are out of order.
      */
     boolean unordered(int i, int j) {
+        cnt_compares++;
         return (comparator.compare(binHeap[i], binHeap[j]) > 0) ^ max;
     }
 
@@ -219,7 +224,7 @@ public class PriorityQueue<K> implements Iterable<K> {
      *          It takes two indices (parent and child) and returns true if the parent satisfies the heap property relative to the child.
      * @return the final position of the element originally at index k after reorganization.
      */
-    private int doHeapify(int k, BiPredicate<Integer, Integer> p) {
+    int doHeapify(int k, BiPredicate<Integer, Integer> p) {
         int i = k;
         while (firstChild(i) <= last + first - 1) {
             int j = firstChild(i);
@@ -234,16 +239,17 @@ public class PriorityQueue<K> implements Iterable<K> {
     /**
      * Exchange the values at indices i and j
      */
-    private void swap(int i, int j) {
+    void swap(int i, int j) {
         K tmp = binHeap[i];
         binHeap[i] = binHeap[j];
         binHeap[j] = tmp;
+        cnt_swaps++;
     }
 
     /**
      * Get the index of the parent of the element at index k
      */
-    private int parent(int k) {
+    int parent(int k) {
         return (k + 1 - first) / 2 + first - 1;
     }
 
@@ -251,7 +257,7 @@ public class PriorityQueue<K> implements Iterable<K> {
      * Get the index of the first child of the element at index k.
      * The index of the second child will be one greater than the result.
      */
-    private int firstChild(int k) {
+    int firstChild(int k) {
         return (k + 1 - first) * 2 + first - 1;
     }
 
@@ -269,12 +275,15 @@ public class PriorityQueue<K> implements Iterable<K> {
         return max;
     }
 
-    private final boolean max;
-    private final int first;
-    private final Comparator<K> comparator;
-    private final K[] binHeap; // binHeap[i] is ith element of binary heap (first element is reserved)
-    private int last; // number of elements in the binary heap
-    private final boolean floyd; //Determine whether floyd's snake method is on or off inside the take method
+    final boolean max;
+    final int first;
+    final Comparator<K> comparator;
+    final K[] binHeap; // binHeap[i] is ith element of binary heap (first element is reserved)
+    int last; // number of elements in the binary heap
+    final boolean floyd; //Determine whether floyd's snake method is on or off inside the take method
+    int cnt_compares = 0; // count of total compares
+    int cnt_swaps = 0; // count of total swaps
+
 
     public static void main(String[] args) {
         doMain();
