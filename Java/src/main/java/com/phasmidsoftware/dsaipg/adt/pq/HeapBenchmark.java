@@ -13,8 +13,8 @@ public class HeapBenchmark {
     private static final long seed = 10;
     private static final Random random = new Random(seed);
 
-    private static <T> long[] testHeap(Class<? extends PriorityQueue<T>> clazz, boolean floyd, int M, Integer[] a) throws Exception {
-        PriorityQueue<Integer> heap =  (PriorityQueue<Integer>) clazz
+    private static <T> long[] testHeap(Class<? extends PriorityQueueOriginal<T>> clazz, boolean floyd, int M, Integer[] a) throws Exception {
+        PriorityQueueOriginal<Integer> heap =  (PriorityQueueOriginal<Integer>) clazz
                 .getDeclaredConstructor(int.class, boolean.class, Comparator.class, boolean.class)
                 .newInstance(M, true, Comparator.naturalOrder(), floyd);
 
@@ -44,8 +44,8 @@ public class HeapBenchmark {
         double[] avgRemoveTimes = new double[4];
         long[] totalCompares = new long[4];
         long[] totalSwaps = new long[4];
-        Class<? extends PriorityQueue<Integer>>[] heapTypes = new Class[]{
-                PriorityQueue.class, PriorityQueue.class, FouraryHeap.class, FouraryHeap.class
+        Class<? extends PriorityQueueOriginal<Integer>>[] heapTypes = new Class[]{
+                PriorityQueueOriginal.class, PriorityQueueOriginal.class, FouraryHeap.class, FouraryHeap.class
         };
         boolean[] floydFlags = {false, true, false, true};
 

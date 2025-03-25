@@ -1,4 +1,4 @@
-package main.java.com.phasmidsoftware.dsaipg.sort.par;
+package com.phasmidsoftware.dsaipg.sort.par;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;

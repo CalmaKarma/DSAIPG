@@ -3,7 +3,7 @@ package com.phasmidsoftware.dsaipg.adt.pq;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
-public class FouraryHeap<K> extends PriorityQueue<K> {
+public class FouraryHeap<K> extends PriorityQueueOriginal<K> {
 
     public FouraryHeap(boolean max, Object[] binHeap, int first, int last, Comparator<K> comparator, boolean floyd) {
         super(max, binHeap, first, last, comparator, floyd);

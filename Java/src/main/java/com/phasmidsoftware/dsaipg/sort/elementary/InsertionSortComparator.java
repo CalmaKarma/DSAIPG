@@ -3,20 +3,12 @@
  */
 package com.phasmidsoftware.dsaipg.sort.elementary;
 
-<<<<<<< HEAD:src/main/java/com/phasmidsoftware/dsaipg/sort/elementary/InsertionSortComparator.java
 import com.phasmidsoftware.dsaipg.adt.threesum.Source;
-import com.phasmidsoftware.dsaipg.sort.Helper;
-import com.phasmidsoftware.dsaipg.sort.Sort;
-import com.phasmidsoftware.dsaipg.sort.SortWithHelper;
-import com.phasmidsoftware.dsaipg.util.Config;
-import com.phasmidsoftware.dsaipg.util.Config_Benchmark;
-=======
 import com.phasmidsoftware.dsaipg.sort.generic.Sort;
 import com.phasmidsoftware.dsaipg.sort.generic.SortWithHelper;
 import com.phasmidsoftware.dsaipg.sort.helper.Helper;
 import com.phasmidsoftware.dsaipg.util.config.Config;
 import com.phasmidsoftware.dsaipg.util.config.Config_Benchmark;
->>>>>>> upstream/editionFirst:Java/src/main/java/com/phasmidsoftware/dsaipg/sort/elementary/InsertionSortComparator.java
 
 import java.io.IOException;
 import java.util.Arrays;

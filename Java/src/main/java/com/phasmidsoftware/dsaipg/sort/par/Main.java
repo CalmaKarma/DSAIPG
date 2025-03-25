@@ -2,7 +2,7 @@
  * Copyright (c) 2024. Robin Hillyard
  */
 
-package main.java.com.phasmidsoftware.dsaipg.sort.par;
+package com.phasmidsoftware.dsaipg.sort.par;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
