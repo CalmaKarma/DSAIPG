@@ -2,7 +2,7 @@
  * Copyright (c) 2024. Robin Hillyard
  */
 
-package main.java.com.phasmidsoftware.dsaipg.sort.par;
+package com.phasmidsoftware.dsaipg.sort.par;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -104,29 +104,13 @@ public class Main {
         }
     }
 
-    /**
-     * Processes the command-line arguments by iterating through the provided array of arguments.
-     * Each argument is checked for specific prefixes (e.g., "-" symbols), and arguments with such prefixes
-     * are further handled using {@link #processArg(String[])}. The method continuously modifies the arguments array
-     * by removing processed elements.
-     *
-     * @param args an array of strings representing command-line arguments to be processed.
-     *             Each argument can include options, flags, or parameters that configure the program's behavior.
-     */
+
     private static void processArgs(String[] args) {
         String[] xs = args;
         while (xs.length > 0)
             if (xs[0].startsWith("-")) xs = processArg(xs);
     }
 
-    /**
-     * Processes a given array of strings, extracting a subset of elements and applying a command
-     * processing operation on the first two elements of the input array.
-     *
-     * @param xs the input array of strings where the first two elements are used for command processing
-     *           and the remaining elements are returned as the result.
-     * @return an array of strings containing the elements of the input array excluding the first two.
-     */
     private static String[] processArg(String[] xs) {
         String[] result = new String[0];
         System.arraycopy(xs, 2, result, 0, xs.length - 2);
@@ -134,15 +118,6 @@ public class Main {
         return result;
     }
 
-    /**
-     * Processes a command and performs an associated action based on the given inputs.
-     *
-     * @param x the command identifier, which specifies the operation to perform.
-     *          Supported values: "N" for setting configuration and "P" for retrieving
-     *          the common pool parallelism level.
-     * @param y the value associated with the command. For "N", this represents the
-     *          configuration value to be set.
-     */
     private static void processCommand(String x, String y) {
         if (x.equalsIgnoreCase("N")) setConfig(x, Integer.parseInt(y));
         else
@@ -151,14 +126,6 @@ public class Main {
                 ForkJoinPool.getCommonPoolParallelism();
     }
 
-    /**
-     * Configures a key-value pair in the application's configuration.
-     * This method stores the specified key and associated integer value
-     * into the configuration map.
-     *
-     * @param x the key to be stored in the configuration
-     * @param i the integer value to be associated with the specified key
-     */
     private static void setConfig(String x, int i) {
         configuration.put(x, i);
     }

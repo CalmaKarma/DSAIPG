@@ -1,8 +1,4 @@
-/*
- * Copyright (c) 2024. Robin Hillyard
- */
-
-package main.java.com.phasmidsoftware.dsaipg.sort.par;
+package com.phasmidsoftware.dsaipg.sort.par;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -19,6 +15,7 @@ import java.util.concurrent.RecursiveAction;
  */
 public class Main {
 
+<<<<<<< HEAD:src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
     private static final int ARRAY_SIZE = 2_000_000;
     private static final int NUM_ITERATIONS = 10;
     private static final int INITIAL_CUTOFF = 1_000;
@@ -28,13 +25,42 @@ public class Main {
     private static final int MAX_WORKERS = 64;
     private static final String OUTPUT_FILE = "./src/result.csv";
 
+=======
+    /**
+     * The main method serves as the entry point for the program. It processes command-line arguments,
+     * configures sorting parameters, performs parallel sorting on a random array, measures execution time,
+     * and writes the performance results to a CSV file.
+     *
+     * @param args command-line arguments used for configuring program execution.
+     */
+>>>>>>> upstream/editionFirst:Java/src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
     public static void main(String[] args) {
         processArgs(args);
         System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
 
         Random random = new Random();
+<<<<<<< HEAD:src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
         int[] array = new int[ARRAY_SIZE];
         ArrayList<String> timeList = new ArrayList<>();
+=======
+        int[] array = new int[2000000];
+        Collection<Long> timeList = new ArrayList<>();
+        for (int j = 50; j < 100; j++) {
+            ParSort.cutoff = 10000 * (j + 1);
+            // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
+            long time;
+            long startTime = System.currentTimeMillis();
+            for (int t = 0; t < 10; t++) {
+                for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
+                ParSort.sort(array, 0, array.length);
+            }
+            long endTime = System.currentTimeMillis();
+            time = (endTime - startTime);
+            timeList.add(time);
+
+
+            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
+>>>>>>> upstream/editionFirst:Java/src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
 
         System.out.println("Starting warmup phase...");
         ParSort.executor = new ForkJoinPool(15);
@@ -104,6 +130,9 @@ public class Main {
         }
     }
 
+<<<<<<< HEAD:src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
+
+=======
     /**
      * Processes the command-line arguments by iterating through the provided array of arguments.
      * Each argument is checked for specific prefixes (e.g., "-" symbols), and arguments with such prefixes
@@ -113,6 +142,7 @@ public class Main {
      * @param args an array of strings representing command-line arguments to be processed.
      *             Each argument can include options, flags, or parameters that configure the program's behavior.
      */
+>>>>>>> upstream/editionFirst:Java/src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
     private static void processArgs(String[] args) {
         String[] xs = args;
         while (xs.length > 0)
@@ -165,6 +195,7 @@ public class Main {
 
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private static final Map<String, Integer> configuration = new HashMap<>();
+<<<<<<< HEAD:src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
 
     static class SortTask extends RecursiveAction {
         private final int[] array;
@@ -182,4 +213,6 @@ public class Main {
             ParSort.sort(array, from, to);
         }
     }
+=======
+>>>>>>> upstream/editionFirst:Java/src/main/java/com/phasmidsoftware/dsaipg/sort/par/Main.java
 }
