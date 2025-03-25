@@ -5,16 +5,20 @@ Companion repository to:
 by Robin Hillyard, College of Engineering, Northeastern University, Boston, MA, USA.
 Published by Cognella.
 
-This is version 1-1 (first revision of the first edition).
+This is version 1-2 (second revision of the first edition).
 
 ## Installation
-This project is designed to be cloned from https://github.com/rchillyard/DSAIPG.git
+There are two major directories within this repository:
+* Java
+* Python
+
+The repository is designed to be cloned from https://github.com/rchillyard/DSAIPG.git
 Alternatively, if you will be submitting assignments based on the repository,
 then you might want to fork it instead.
 
-This repository contains a Maven project (see the `pom.xnl` file in the top level).
+The Java repository contains a Maven project (see the `pom.xnl` file in the top level).
 Ideally, you will use an IDE that is suited to Maven projects.
-I recommend IntelliJ IDEA.
+I recommend IntelliJ IDEA for Java work.
 
 ## Navigation
 The simplest way to find code is just to use the `Navigate/Class` menu.
@@ -37,8 +41,8 @@ I recommend adding the following pattern to be recognized as needing attention
 
 This will make it easy to see where you have to write code.
 
-## Building and Testing
-If you have cloned (or forked) the repository into IDEA, it should build the project
+## Building and Testing (Java)
+If you have cloned (or forked) the repository into IDEA, it should build the Java project
 for you without much intervention on your part.
 You will need at least Java 17 as your SDK.
 Recommended: Oracle OpenJDK 18.0.2
@@ -52,3 +56,4 @@ that you need to replace with functioning code in many places
 There are also functional tests in the `src/it/java` directory.
 However, these take significantly longer to run and are really not necessary. 
 
+## Building and Testing (Python)
