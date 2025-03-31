@@ -12,6 +12,7 @@ import com.phasmidsoftware.dsaipg.sort.generic.SortException;
 import com.phasmidsoftware.dsaipg.sort.generic.SortWithComparableHelper;
 import com.phasmidsoftware.dsaipg.sort.generic.SortWithHelper;
 import com.phasmidsoftware.dsaipg.sort.helper.Helper;
+import com.phasmidsoftware.dsaipg.sort.helper.InstrumentedComparableHelper;
 import com.phasmidsoftware.dsaipg.sort.helper.NonInstrumentingComparableHelper;
 import com.phasmidsoftware.dsaipg.sort.linearithmic.TimSort;
 import com.phasmidsoftware.dsaipg.sort.linearithmic.*;
@@ -33,6 +34,7 @@ import java.util.stream.Stream;
 import static com.phasmidsoftware.dsaipg.sort.helper.InstrumentedComparatorHelper.AT;
 import static com.phasmidsoftware.dsaipg.sort.linearithmic.MergeSort.MERGESORT;
 import static com.phasmidsoftware.dsaipg.util.benchmark.SortBenchmarkHelper.*;
+import static com.phasmidsoftware.dsaipg.sort.helper.Instrument.*;
 import static com.phasmidsoftware.dsaipg.util.config.Config_Benchmark.isInstrumented;
 import static com.phasmidsoftware.dsaipg.util.general.Utilities.formatWhole;
 
@@ -85,9 +87,16 @@ public class SortBenchmark {
      * @param preProcessor the pre-processor function, if any.
      * @param timeLoggers  a set of timeLoggers to be used.
      */
-    static void runStringSortBenchmark(String[] words, int nWords, int nRuns, SortWithHelper<String> sorter, UnaryOperator<String[]> preProcessor, TimeLogger[] timeLoggers) {
+    static void runStringSortBenchmark(String[] words, int nWords, int nRuns, SortWithHelper<String> sorter, UnaryOperator<String[]> preProcessor, TimeLogger[] timeLoggers){
         logger.info("****************************** String sort: " + nRuns + " runs of " + nWords + " " + sorter.getDescription() + " ******************************");
         new SorterBenchmark<>(String.class, preProcessor, sorter, words, nRuns, timeLoggers).run(getDescription(nWords, sorter), nWords);
+        if (sorter.getHelper().instrumented()) {
+            logger.info("# of comparisons: " + sorter.getHelper().getStatPack().getStatistics(COMPARES).mean());
+            logger.info("# of swaps: " + sorter.getHelper().getStatPack().getStatistics(SWAPS).mean());
+            logger.info("# of copies: " + sorter.getHelper().getStatPack().getStatistics(COPIES).mean());
+            logger.info("# of hits: " + sorter.getHelper().getStatPack().getStatistics(HITS).mean());
+        }
+
         sorter.close();
     }
 
@@ -159,7 +168,7 @@ public class SortBenchmark {
      *
      * @param nWords the number of words to be sorted.
      */
-    void benchmarkStringSorters(String[] words, int nWords) {
+    void benchmarkStringSorters(String[] words, int nWords){
         double totalWork = getTotalWork(nWords, config, BENCHMARKSTRINGSORTERS);
         logger.info("benchmarkStringSorters: sorting " + formatWhole(nWords) + " words" + (isInstrumented(config) ? " and instrumented" : "") + " with total work (for estimating runs): " + totalWork);
         if (isInstrumented(config))
@@ -442,7 +451,7 @@ public class SortBenchmark {
      *                    <p>
      *                                                                             NOTE: this method is public because it is referenced in a unit test of a different package
      */
-    public static void runStringSortBenchmark(String[] words, int nWords, int nRuns, SortWithHelper<String> sorter, TimeLogger[] timeLoggers) {
+    public static void runStringSortBenchmark(String[] words, int nWords, int nRuns, SortWithHelper<String> sorter, TimeLogger[] timeLoggers){
         sorter.getHelper().init(nWords, nRuns);
         try (Stopwatch stopwatch = new Stopwatch()) {
             runStringSortBenchmark(words, nWords, nRuns, sorter, sorter::preProcess, timeLoggers);
@@ -627,7 +636,7 @@ public class SortBenchmark {
      * @param nRuns   The number of times the sorting operation should be executed.
      * @param config  The configuration object providing additional settings for the sort and benchmark.
      */
-    private void runMergeSortBenchmark(String[] words, int nWords, int nRuns, Config config) {
+    private void runMergeSortBenchmark(String[] words, int nWords, int nRuns, Config config){
         try (SortWithComparableHelper<String> sorter = new MergeSort<>(nWords, nRuns, config)) {
             runStringSortBenchmark(words, nWords, nRuns, sorter, timeLoggersLinearithmic);
         }
